@@ -27,10 +27,8 @@ for sample_ratio = 2:2
         for algo_id = 1:5
    %             MFM
             if algo_id >= 7 && algo_id <=9
-                if i == 1
-                    tmpPara = exp_grid(algo_id, fname, num_metric, 1);
-                    bestPara{algo_id} = tmpPara{end};
-                end
+                tmpPara = exp_grid(algo_id, fname, num_metric, 1);
+                bestPara{algo_id} = tmpPara{end};
                 para.para1 = bestPara{algo_id}.para1;
                 para.para2 = bestPara{algo_id}.para2;
                 para.k = k;
@@ -40,19 +38,15 @@ for sample_ratio = 2:2
                               
             % MFM_LR
             if algo_id == 1
-                if i == 1
-                    bestPara{algo_id} = exp_linear(algo_id, fname, num_metric, 1);
-                end
+                bestPara{algo_id} = exp_linear(algo_id, fname, num_metric, 1);
                 para.para1 = bestPara{algo_id}.para1;
                 [avg_metrics,std_metrics] ...
                     = exp_func( algo_id, fname, para, 1);
             end
             % libFM
             if algo_id == 2
-                if i == 1
-                    bestPara = exp_linear(algo_id, fname, num_metric, 1);
-                end
-                para.para1 = bestPara.para1; 
+                bestPara{algo_id} = exp_linear(algo_id, fname, num_metric, 1);
+                para.para1 = bestPara{algo_id}.para1; 
                 para.method = 'als';
                 para.k = k; 
                 [avg_metrics,std_metrics] ...
@@ -61,9 +55,7 @@ for sample_ratio = 2:2
 
             % MFM_TF
             if algo_id == 3
-                if i == 1
-                    bestPara{algo_id} = exp_linear(algo_id, fname, num_metric, 1);
-                end
+                bestPara{algo_id} = exp_linear(algo_id, fname, num_metric, 1);
                 para.para1 = bestPara{algo_id}.para1;
                 para.k = k;
                 [avg_metrics,std_metrics] ...
@@ -87,10 +79,8 @@ for sample_ratio = 2:2
                 para.a_ = 1;
 %                para.c_= 1;
 %                para.miu_ = 1e2;
-               if i == 1
-                   tmpPara = exp_grid(algo_id, fname, num_metric, 1);
-                   bestPara{algo_id} = tmpPara{end};
-               end 
+               tmpPara = exp_grid(algo_id, fname, num_metric, 1);
+               bestPara{algo_id} = tmpPara{end};
                para.para1 = bestPara{algo_id}.para1;
                para.para2 = bestPara{algo_id}.para2;
                 para.para1 = para.c_;
@@ -104,10 +94,8 @@ for sample_ratio = 2:2
                 % dblp1, fox
 %                para.para1 = 10^-4;    % alpha, beta
 %                para.para2 = 10^-5;    % gamma
-               if i == 1
-                   tmpPara = exp_grid(algo_id, fname, num_metric, 1);
-                   bestPara{algo_id} = tmpPara{end};
-               end 
+               tmpPara = exp_grid(algo_id, fname, num_metric, 1);
+               bestPara{algo_id} = tmpPara{end};
                para.para1 = bestPara{algo_id}.para1;
                para.para2 = bestPara{algo_id}.para2;
                 para.h = k;
@@ -116,10 +104,8 @@ for sample_ratio = 2:2
              end
             % rMTFL
             if algo_id == 11
-                if i == 1
-                    tmpPara = exp_grid(algo_id, fname, num_metric, 1);
-                    bestPara{algo_id} = tmpPara{end};
-                end 
+                tmpPara = exp_grid(algo_id, fname, num_metric, 1);
+                bestPara{algo_id} = tmpPara{end};
                 para.para1 = bestPara{algo_id}.para1;
                 para.para2 = bestPara{algo_id}.para2;
                 [avg_metrics,std_metrics] ...

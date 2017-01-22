@@ -27,18 +27,14 @@ for sample_ratio = 2:2
         for algo_id = 1:algo_num
             % MFM_LR
             if algo_id == 1
-                if i == 1
-                    bestPara{algo_id} = reg_linear(algo_id, fname, num_metric, 0);
-                end
+                bestPara{algo_id} = reg_linear(algo_id, fname, num_metric, 0);
                 para.para1 = bestPara{algo_id}.para1;
                 [avg_metrics,std_metrics] ...
                     = exp_func( algo_id, fname, para, 0);
             end
              % libFM
             if algo_id == 2
-               if i == 1
-                    bestPara{algo_id} = reg_linear(algo_id, fname, num_metric, 0);
-                end
+                bestPara{algo_id} = reg_linear(algo_id, fname, num_metric, 0);
                 para.para1 = bestPara{algo_id}.para1; 
                 para.method = 'als';
                 para.k = k; 
@@ -49,9 +45,7 @@ for sample_ratio = 2:2
            
             % MFM_TF
             if algo_id == 3
-                if i == 1
-                    bestPara{algo_id} = reg_linear(algo_id, fname, num_metric, 0);
-                end
+                bestPara{algo_id} = reg_linear(algo_id, fname, num_metric, 0);
                 para.para1 = bestPara{algo_id}.para1;
                 para.k = k;
                 [avg_metrics,std_metrics] ...
@@ -60,9 +54,7 @@ for sample_ratio = 2:2
 
             % MFM_MVM
             if algo_id == 4
-                if i == 1
-                    bestPara{algo_id} = reg_linear(algo_id, fname, num_metric, 0);
-                end
+                bestPara{algo_id} = reg_linear(algo_id, fname, num_metric, 0);
                 para.para1 = bestPara{algo_id}.para1;
                 para.k = k;
                 [avg_metrics,std_metrics] ...
@@ -70,10 +62,8 @@ for sample_ratio = 2:2
             end
 
             if algo_id >= 7 && algo_id <=9
-                if i == 1
-                    tmpPara = reg_grid_small(algo_id, fname, num_metric, 0);
-                    bestPara{algo_id} = tmpPara{end};
-                end
+                tmpPara = reg_grid(algo_id, fname, num_metric, 0);
+                bestPara{algo_id} = tmpPara{end};
                 para.para1 = bestPara{algo_id}.para1;
                 para.para2 = bestPara{algo_id}.para2;
                 para.k = k;
@@ -83,10 +73,8 @@ for sample_ratio = 2:2
 
             % rMTFL
              if algo_id == 11
-                if i == 1
-                    tmpPara = reg_grid(algo_id, fname, num_metric, 0);
-                    bestPara{algo_id} = tmpPara{end};
-                end 
+                tmpPara = reg_grid(algo_id, fname, num_metric, 0);
+                bestPara{algo_id} = tmpPara{end};
                 para.para1 = bestPara{algo_id}.para1;
                 para.para2 = bestPara{algo_id}.para2;
                 [avg_metrics,std_metrics] ...
