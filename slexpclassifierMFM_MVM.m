@@ -4,7 +4,7 @@ classdef slexpclassifierMFM_MVM < slexpclassifier
         k_; % number of factors
         iteration_;
         loss_; % 0 for regression; 1 for classification
-        para_train='-lambda: 0.01 -k: 10';
+        para_train='-lambda: 0.01 -k: 20';
     end
     
     methods

@@ -1,6 +1,5 @@
 function [exp_avg,exp_std] = exp_func(algo_id,data_id,para,loss_func)
     num_iter = 200;
-%    dataset=slexpdatasetHIV();
     if para.IsCv == 1
        dataset=slexpdatasetTrainValid();
        para.IsCv = 0;
@@ -43,20 +42,6 @@ function [exp_avg,exp_std] = exp_func(algo_id,data_id,para,loss_func)
 %     evalmethods{6}=slexpevalMicrorecallNeg();
 %     evalmethods{7}=slexpevalMicroF1Neg();
         
-%    if (algo_id==7) 
-%        cla=slexpclassifierMFM_uni();
-%        expsetting=slexpSettingMVMT();
-%        disp(['Running ====='  dataset.name '---' cla.name '-----']);
-%        result=['result/' dataset.name '/' cla.name '-' data_id '.mat'];
-%        disp(result);
-%        exp=slexprofile(dataset,expsetting,cla,evalmethods,result);
-%        exp.classifier.lambda_ = para.para1;
-%        exp.classifier.gamma1_ = para.para2;
-%        exp.classifier.k_= para.k;
-%        exp.classifier.iteration_=num_iter;
-%        exp.classifier.loss_=loss_func;
-%        exp=exp.run(para.IsCv);
-%    end    
     %MKL
 %     if (algo_id==3) 
 %         cla=slexpclassifierLIBLINEAR();
@@ -120,7 +105,6 @@ function [exp_avg,exp_std] = exp_func(algo_id,data_id,para,loss_func)
     %% MVM
     if (algo_id==4) 
         cla=slexpclassifierMFM_MVM();
-%        cla=slexpclassifierMVM();
         expsetting=slexpSettingMVMT();
         disp(['Running ====='  dataset.name '---' cla.name '-----']);
         result=['result/' dataset.name '/' cla.name '-' data_id '.mat'];

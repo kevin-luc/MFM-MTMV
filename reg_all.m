@@ -20,7 +20,7 @@ end
 for sample_ratio = 2:2
     bestPara = cell(algo_num,1);
     for i = 1:trial_num
-        data_id = ['amazon-t' num2str(sample_ratio)];
+        data_id = ['ml-t' num2str(sample_ratio)];
         fname = [data_id '-' num2str(i)];
         k = 20;
         para.IsCv = 0;

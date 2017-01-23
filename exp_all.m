@@ -24,7 +24,7 @@ for sample_ratio = 2:2
         fname = [data_id '-' num2str(i)];
         k = 20;
         para.IsCv = 0;
-        for algo_id = 1:5
+        for algo_id = 6:algo_num
    %             MFM
             if algo_id >= 7 && algo_id <=9
                 tmpPara = exp_grid(algo_id, fname, num_metric, 1);
@@ -83,8 +83,8 @@ for sample_ratio = 2:2
                bestPara{algo_id} = tmpPara{end};
                para.para1 = bestPara{algo_id}.para1;
                para.para2 = bestPara{algo_id}.para2;
-                para.para1 = para.c_;
-                para.para2 = para.miu_;
+%                para.para1 = para.c_;
+%                para.para2 = para.miu_;
                 [avg_metrics,std_metrics] ...
                     = exp_func( algo_id, fname, para, 1);
             end
@@ -98,14 +98,14 @@ for sample_ratio = 2:2
                bestPara{algo_id} = tmpPara{end};
                para.para1 = bestPara{algo_id}.para1;
                para.para2 = bestPara{algo_id}.para2;
-                para.h = k;
+               para.k = k;
                 [avg_metrics,std_metrics] ...
                     = exp_func( algo_id, fname, para, 1);
              end
             % rMTFL
             if algo_id == 11
                 tmpPara = exp_grid(algo_id, fname, num_metric, 1);
-                bestPara{algo_id} = tmpPara{end};
+                bestPara{algo_id} = tmpPara{end};                
                 para.para1 = bestPara{algo_id}.para1;
                 para.para2 = bestPara{algo_id}.para2;
                 [avg_metrics,std_metrics] ...

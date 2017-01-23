@@ -96,7 +96,6 @@ classdef slexpclassifierMFM < slexpclassifier
             history = zeros(num_iter,1);
             regPara.step_size = 0.1;
             for  iter = 1: num_iter
-%                 regPara.step_size = 1/sqrt(iter+10);
                 for v = 1 : num_view
                     [Para, Ada] = Update_Theta(Para, Ada, regPara, Xtrain, Ytrain, view_index,train_index, v, loss_func);
                 end;                    
@@ -111,7 +110,6 @@ classdef slexpclassifierMFM < slexpclassifier
                     break;
                 end;
             end
-
             
             s.time_train = cputime-running_t;
             s.time = cputime - running_t;            
@@ -183,16 +181,13 @@ function [ Para, Ada ] = Update_Phi( Para, Ada, regPara, X, Y, view_index, task_
     else % default is L2
         grad = delta_loss + 2*lambda* Phi;
     end
-    
-%    grad = delta_loss + lambda * Phi;
     Ada.Phi = Ada.Phi + power( grad, 2 );
     Para.Phi = Para.Phi - step_size * grad ./ ( sqrt( Ada.Phi ) + 1e-6 );
-%     Para.Phi = Para.Phi - step_size * grad;
 end
 
 function [ Para, Ada ] = Update_Theta( Para, Ada, regPara, X, Y, view_index, task_index, view, loss_func)
 % delta_loss = sum_i z_view(:,i) * delta_L(i) * Pi_Z_Theta_v(i,:) * Phi(t,:);
-% grad_theta = delta_loss + beta * Theta
+% grad_theta = delta_loss + lambda * Theta
 % Theta <-  Theta - step_size * grad_theta ./ sqrt(Ada.Theta);
 % Pi_Z_Theta_v: is a N * k matrix, 
 %    where each row is the product of Z^{~which_view} * theta^{~which_view}
@@ -276,11 +271,10 @@ end
 function [F] = Compute( Para, regPara, X, Y, view_index, task_index, loss_func)
 % F: value of the objective function
 % F = \sum_i loss_i
-%   + \lambda/2 ( |Phi|_F^2 + \sum_p^V |Theta^{p}|_F^2)
-%   + \gamma_1/2 * |U|_21;
+%   + \lambda ( |Phi|_F^2 + \sum_p^V |Theta^{p}|_F^2)
+%   + \gamma * |U|_21;
     lambda = regPara.lambda;
     gamma_1 = regPara.gamma_1;
-%     L21_norm =@(M) sum(sqrt(sum(abs(M).^2,2)));
         
     num_view = length(Para.Theta);
     [ S, ~, ~] = Predict( Para, X, view_index, task_index, -1 );
@@ -293,14 +287,6 @@ function [F] = Compute( Para, regPara, X, Y, view_index, task_index, loss_func)
         F = F + lambda * ComputeNorm(Para.Theta{v},Para.regular_view);
     end;    
     F = F +  gamma_1 * ComputeNorm(Para.U,Para.regular_u);
-
-%     F = F + lambda * norm( Para.Phi, 'fro');
-%     for v = 1 : num_view
-%         F = F + lambda * norm(Para.Theta{v}, 'fro');
-% %         F = F + beta * norm(Para.M{v}'*Para.Theta{v}- I, 'fro');
-% %         F = F + mu * norm(Para.M{v} - Para.Theta{v}+ Para.A{v}/mu, 'fro');        
-%     end;
-%     F = F +  gamma_1/2 * L21_norm(Para.U);
 end
 
 function [F, delta_L] = Compute_loss(S,Y, task_index, loss_func)
